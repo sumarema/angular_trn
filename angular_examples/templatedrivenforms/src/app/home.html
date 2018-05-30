@@ -1,0 +1,58 @@
+<h1>This is rendered by Component: {{name}}</h1>
+<form #form= 'ngForm'ngNativeValidate>
+  <div class="form-group">
+    <label> First Name</label>
+    <input type="text" #firstname="ngModel" class="form-control" placeholder="firstname"
+           name="firstname" [(ngModel)]="model.firstname"
+           (ngModelChange)="firstnameuppercase($event)" required/>
+  </div>
+  <div *ngIf="firstname.invalid && firstname.touched" class="alert alert-danger">
+    First Name is required by
+  </div>
+ <!-- <div *ngIf="firstname.invalid && firstname.dirty" class="alert alert-danger">
+   <div class="form-group" [class.has-error]="firstname.invalid"></div>
+  </div>
+  <input #firstname="ngModel" type="text" pattern="...+" maxlenght="10" class="form-control"
+
+  -->
+
+  <div class="form-group">
+    <label> Last Name</label>
+    <input type="text" class="form-control" placeholder="lastname" name="lastname" [(ngModel)]="model.lastname" required/>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="Is FTE" [(ngModel)]="model.isFullTime">FTE
+    </label>
+  </div>
+  <div>
+    <label>
+      <input type="radio" name="paymentType" [(ngModel)]="model.paymentType" value="Monthly">Monthly
+    </label>
+  </div>
+  <div>
+    <label>
+      <input type="radio" name="paymentType" [(ngModel)]="model.paymentType" value="Weekly">Weekly
+    </label>
+  </div>
+  <div class="form-group" [class.has-error]="hasPrimaryLanguage"[(ngModel)]="model.primaryLanguage">
+    <label>Primary Language</label>
+    <select class="form-control" name="primaryLanguage" [(ngModel)]="model.primaryLanguage" value="primaryLanguage"
+            #primaryLanguage
+            (blur)="validatePrimaryLanguage(primaryLanguage.value)"
+            (change)="validatePrimaryLanguage(primaryLanguage.value)">
+      <option value="default">Select Language..</option>
+      <option *ngFor="let lang of languages">
+        {{lang}}
+      </option>
+    </select>
+  </div>
+ <button class="btn btn-primary" [disabled]="form.invalid"  type="submit">OK</button>
+</form>
+<br/>
+Model: {{model | json}}
+<br/>
+Angular: {{form.value | json}}
+
+
+{{form.pristine}}
